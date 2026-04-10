@@ -2,131 +2,60 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <title>La Voce del Giorno</title>
+  <title>Pagina con Immagine</title>
   <style>
     body {
+      font-family: Arial, sans-serif;
+      background-color: #f0f0f0;
+      text-align: center;
       margin: 0;
-      font-family: Georgia, "Times New Roman", serif;
-      background-color: #e6e6e6;
     }
 
-    .page {
-      width: 900px;
-      margin: 20px auto;
+    .container {
       background: white;
-      padding: 30px;
+      margin: 40px auto;
+      padding: 20px;
+      width: 600px;
       box-shadow: 0 0 10px rgba(0,0,0,0.2);
     }
 
-    .header {
-      text-align: center;
-      border-bottom: 4px solid black;
-      margin-bottom: 20px;
+    img {
+      max-width: 100%;
+      height: auto;
+      margin-top: 20px;
+      border-radius: 10px;
     }
 
-    .header h1 {
-      font-size: 50px;
-      margin: 0;
-      letter-spacing: 3px;
-    }
-
-    .date {
-      font-size: 14px;
-      color: gray;
-      margin-bottom: 10px;
-    }
-
-    .headline {
-      font-size: 34px;
-      font-weight: bold;
-      margin: 20px 0 10px;
-    }
-
-    .subheadline {
-      font-size: 18px;
-      color: #555;
-      margin-bottom: 20px;
-    }
-
-    .image-section {
-      text-align: center;
-      margin: 20px 0;
-    }
-
-    .image-section img {
-      width: 100%;
-      max-height: 400px;
-      object-fit: cover;
-      border: 1px solid #ccc;
-    }
-
-    .columns {
-      column-count: 2;
-      column-gap: 30px;
-      font-size: 18px;
-      line-height: 1.6;
-      text-align: justify;
-    }
-
-    .upload-box {
-      margin: 20px 0;
-      padding: 10px;
-      background: #f2f2f2;
-      border: 1px solid #ccc;
+    input, button {
+      margin-top: 10px;
+      padding: 8px;
     }
   </style>
 </head>
 <body>
 
-<div class="page">
-  <div class="header">
-    <h1>LA VOCE DEL GIORNO</h1>
-    <div class="date" id="data"></div>
-  </div>
+<div class="container">
+  <h1>La Mia Pagina Web</h1>
+  <p>Qui sotto puoi visualizzare un'immagine.</p>
 
-  <div class="headline">Titolo principale dell'articolo</div>
-  <div class="subheadline">Un sottotitolo che introduce la notizia in modo accattivante</div>
+  <!-- Controlli -->
+  <input type="text" id="imgUrl" placeholder="Inserisci URL immagine">
+  <br>
+  <button onclick="cambiaImmagine()">Mostra Immagine</button>
+  <br><br>
+  <input type="file" id="fileInput" accept="image/*">
 
-  <div class="upload-box">
-    <strong>Inserisci immagine:</strong><br><br>
-    URL: <input type="text" id="imgUrl" placeholder="https://..." style="width:60%">
-    <button onclick="loadImage()">Carica</button>
-    <br><br>
-    oppure file: <input type="file" id="fileInput" accept="image/*">
-  </div>
+  <!-- Immagine -->
+  <img id="immagine" src="https://via.placeholder.com/500" alt="Immagine">
 
-  <div class="image-section">
-    <img id="newsImage" src="" alt="Immagine articolo" style="display:none;">
-  </div>
-
-  <div class="columns">
-    <p>
-      Questo è un esempio di articolo in stile giornalistico. Il layout a colonne
-      richiama quello dei quotidiani tradizionali, migliorando la leggibilità
-      e l'aspetto visivo.
-    </p>
-    <p>
-      Puoi personalizzare il contenuto, aggiungere immagini e creare una vera e
-      propria pagina di giornale digitale. Questo modello è ideale per progetti,
-      presentazioni o esercizi scolastici.
-    </p>
-    <p>
-      L'immagine sopra può essere caricata tramite URL oppure selezionata
-      direttamente dal tuo computer. Una volta caricata, verrà mostrata
-      automaticamente nella pagina.
-    </p>
-  </div>
 </div>
 
 <script>
-  // Data automatica
-  document.getElementById("data").innerText = new Date().toLocaleDateString("it-IT");
-
-  function loadImage() {
+  function cambiaImmagine() {
     const url = document.getElementById("imgUrl").value;
-    const img = document.getElementById("newsImage");
-    img.src = url;
-    img.style.display = "block";
+    if (url) {
+      document.getElementById("immagine").src = url;
+    }
   }
 
   document.getElementById("fileInput").addEventListener("change", function(e) {
@@ -135,9 +64,7 @@
 
     const reader = new FileReader();
     reader.onload = function(event) {
-      const img = document.getElementById("newsImage");
-      img.src = event.target.result;
-      img.style.display = "block";
+      document.getElementById("immagine").src = event.target.result;
     };
     reader.readAsDataURL(file);
   });
