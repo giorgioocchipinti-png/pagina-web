@@ -2,138 +2,144 @@
 <html lang="it">
 <head>
   <meta charset="UTF-8">
-  <title>Giornale Online</title>
+  <title>La Voce del Giorno</title>
   <style>
     body {
-      font-family: "Georgia", serif;
-      background-color: #f4f4f4;
       margin: 0;
-      padding: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      background-color: #e6e6e6;
     }
 
-    .container {
-      width: 800px;
-      margin: 30px auto;
+    .page {
+      width: 900px;
+      margin: 20px auto;
       background: white;
-      padding: 20px;
+      padding: 30px;
       box-shadow: 0 0 10px rgba(0,0,0,0.2);
     }
 
     .header {
       text-align: center;
-      border-bottom: 3px solid black;
-      padding-bottom: 10px;
+      border-bottom: 4px solid black;
+      margin-bottom: 20px;
     }
 
     .header h1 {
+      font-size: 50px;
       margin: 0;
-      font-size: 48px;
-      letter-spacing: 2px;
+      letter-spacing: 3px;
     }
 
     .date {
       font-size: 14px;
       color: gray;
+      margin-bottom: 10px;
     }
 
-    .title {
-      font-size: 32px;
-      margin: 20px 0 10px;
+    .headline {
+      font-size: 34px;
       font-weight: bold;
+      margin: 20px 0 10px;
     }
 
-    .subtitle {
+    .subheadline {
       font-size: 18px;
       color: #555;
       margin-bottom: 20px;
     }
 
-    .image-container {
+    .image-section {
       text-align: center;
       margin: 20px 0;
     }
 
-    .image-container img {
-      max-width: 100%;
-      height: auto;
-      display: none;
+    .image-section img {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      border: 1px solid #ccc;
     }
 
-    .content {
+    .columns {
+      column-count: 2;
+      column-gap: 30px;
       font-size: 18px;
       line-height: 1.6;
       text-align: justify;
     }
 
-    .controls {
+    .upload-box {
       margin: 20px 0;
       padding: 10px;
-      background: #eee;
+      background: #f2f2f2;
+      border: 1px solid #ccc;
     }
   </style>
 </head>
 <body>
 
-<div class="container">
+<div class="page">
   <div class="header">
-    <h1>IL GIORNALE</h1>
+    <h1>LA VOCE DEL GIORNO</h1>
     <div class="date" id="data"></div>
   </div>
 
-  <div class="title">Titolo dell'Articolo</div>
-  <div class="subtitle">Sottotitolo o descrizione breve dell'articolo</div>
+  <div class="headline">Titolo principale dell'articolo</div>
+  <div class="subheadline">Un sottotitolo che introduce la notizia in modo accattivante</div>
 
-  <div class="controls">
-    <label>Inserisci URL immagine:</label><br>
-    <input type="text" id="imgUrl" placeholder="https://..." style="width: 70%;">
-    <button onclick="caricaDaUrl()">Carica</button>
+  <div class="upload-box">
+    <strong>Inserisci immagine:</strong><br><br>
+    URL: <input type="text" id="imgUrl" placeholder="https://..." style="width:60%">
+    <button onclick="loadImage()">Carica</button>
     <br><br>
-    <label>Oppure carica dal computer:</label><br>
-    <input type="file" id="fileInput" accept="image/*">
+    oppure file: <input type="file" id="fileInput" accept="image/*">
   </div>
 
-  <div class="image-container">
-    <img id="immagine" src="">
+  <div class="image-section">
+    <img id="newsImage" src="" alt="Immagine articolo" style="display:none;">
   </div>
 
-  <div class="content">
+  <div class="columns">
     <p>
-      Questo è un esempio di articolo di giornale. Puoi modificare il testo,
-      inserire contenuti personalizzati e aggiungere immagini per rendere
-      la pagina più realistica.
+      Questo è un esempio di articolo in stile giornalistico. Il layout a colonne
+      richiama quello dei quotidiani tradizionali, migliorando la leggibilità
+      e l'aspetto visivo.
     </p>
     <p>
-      Il layout è ispirato a una classica impaginazione giornalistica,
-      con font serif e una struttura semplice ma elegante.
+      Puoi personalizzare il contenuto, aggiungere immagini e creare una vera e
+      propria pagina di giornale digitale. Questo modello è ideale per progetti,
+      presentazioni o esercizi scolastici.
+    </p>
+    <p>
+      L'immagine sopra può essere caricata tramite URL oppure selezionata
+      direttamente dal tuo computer. Una volta caricata, verrà mostrata
+      automaticamente nella pagina.
     </p>
   </div>
 </div>
 
 <script>
   // Data automatica
-  const oggi = new Date();
-  document.getElementById("data").innerText = oggi.toLocaleDateString("it-IT");
+  document.getElementById("data").innerText = new Date().toLocaleDateString("it-IT");
 
-  // Carica immagine da URL
-  function caricaDaUrl() {
+  function loadImage() {
     const url = document.getElementById("imgUrl").value;
-    const img = document.getElementById("immagine");
+    const img = document.getElementById("newsImage");
     img.src = url;
     img.style.display = "block";
   }
 
-  // Carica immagine da file
-  document.getElementById("fileInput").addEventListener("change", function(event) {
-    const file = event.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const img = document.getElementById("immagine");
-        img.src = e.target.result;
-        img.style.display = "block";
-      };
-      reader.readAsDataURL(file);
-    }
+  document.getElementById("fileInput").addEventListener("change", function(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      const img = document.getElementById("newsImage");
+      img.src = event.target.result;
+      img.style.display = "block";
+    };
+    reader.readAsDataURL(file);
   });
 </script>
 
