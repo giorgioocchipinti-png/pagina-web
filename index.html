@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <title>Giornale Online</title>
+  <style>
+    body {
+      font-family: "Georgia", serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      width: 800px;
+      margin: 30px auto;
+      background: white;
+      padding: 20px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    .header {
+      text-align: center;
+      border-bottom: 3px solid black;
+      padding-bottom: 10px;
+    }
+
+    .header h1 {
+      margin: 0;
+      font-size: 48px;
+      letter-spacing: 2px;
+    }
+
+    .date {
+      font-size: 14px;
+      color: gray;
+    }
+
+    .title {
+      font-size: 32px;
+      margin: 20px 0 10px;
+      font-weight: bold;
+    }
+
+    .subtitle {
+      font-size: 18px;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    .image-container {
+      text-align: center;
+      margin: 20px 0;
+    }
+
+    .image-container img {
+      max-width: 100%;
+      height: auto;
+      display: none;
+    }
+
+    .content {
+      font-size: 18px;
+      line-height: 1.6;
+      text-align: justify;
+    }
+
+    .controls {
+      margin: 20px 0;
+      padding: 10px;
+      background: #eee;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <div class="header">
+    <h1>IL GIORNALE</h1>
+    <div class="date" id="data"></div>
+  </div>
+
+  <div class="title">Titolo dell'Articolo</div>
+  <div class="subtitle">Sottotitolo o descrizione breve dell'articolo</div>
+
+  <div class="controls">
+    <label>Inserisci URL immagine:</label><br>
+    <input type="text" id="imgUrl" placeholder="https://..." style="width: 70%;">
+    <button onclick="caricaDaUrl()">Carica</button>
+    <br><br>
+    <label>Oppure carica dal computer:</label><br>
+    <input type="file" id="fileInput" accept="image/*">
+  </div>
+
+  <div class="image-container">
+    <img id="immagine" src="">
+  </div>
+
+  <div class="content">
+    <p>
+      Questo è un esempio di articolo di giornale. Puoi modificare il testo,
+      inserire contenuti personalizzati e aggiungere immagini per rendere
+      la pagina più realistica.
+    </p>
+    <p>
+      Il layout è ispirato a una classica impaginazione giornalistica,
+      con font serif e una struttura semplice ma elegante.
+    </p>
+  </div>
+</div>
+
+<script>
+  // Data automatica
+  const oggi = new Date();
+  document.getElementById("data").innerText = oggi.toLocaleDateString("it-IT");
+
+  // Carica immagine da URL
+  function caricaDaUrl() {
+    const url = document.getElementById("imgUrl").value;
+    const img = document.getElementById("immagine");
+    img.src = url;
+    img.style.display = "block";
+  }
+
+  // Carica immagine da file
+  document.getElementById("fileInput").addEventListener("change", function(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = document.getElementById("immagine");
+        img.src = e.target.result;
+        img.style.display = "block";
+      };
+      reader.readAsDataURL(file);
+    }
+  });
+</script>
+
+</body>
+</html>
